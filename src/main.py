@@ -1,4 +1,5 @@
 from flask import Flask, request
+from FileParser import FileParser
 
 app = Flask(__name__)
 
@@ -11,4 +12,6 @@ def file():
     file = request.files.get("file")
     content = file.read()
 
-    return content
+    parser = FileParser(content)
+
+    return parser.get_raw()

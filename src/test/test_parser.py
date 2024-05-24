@@ -12,3 +12,8 @@ class TestFileParser:
         parser = FileParser.FileParser(text)
         with pytest.raises(ValueError):
             parser.get_most_common_word()
+
+    def test_get_most_common_word_single_word(self):
+        text = "one"
+        parser = FileParser.FileParser(text)
+        assert parser.get_most_common_word() == "one"

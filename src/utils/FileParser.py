@@ -16,6 +16,9 @@ class FileParser:
         # Split the text into words
         words = words.split()
 
+        if len(words) == 0:
+            raise ValueError("No words found")
+
         # Count the frequency of each word
         words.sort()
 

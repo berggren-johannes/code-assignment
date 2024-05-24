@@ -8,6 +8,7 @@ def hello():
 
 @app.route('/file', methods=['POST'])
 def file():
-    file = request.files.get['file']
+    file = request.files.get("file")
+    content = file.read()
 
-    return 'File!'
+    return content

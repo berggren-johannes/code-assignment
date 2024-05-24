@@ -12,7 +12,18 @@ class FileParser:
     
     def get_most_common_word(self):
         words = self.get_raw()
-        return words
+        
+        # Split the text into words
+        words = words.split()
+
+        # Count the frequency of each word
+        words.sort()
+
+        # Find the word with the highest frequency
+        most_common_word = words[0]
+        # Return the word with the highest frequency
+
+        return most_common_word
     
     def sandwich_word(self, word):
         return f"{self.prefix}{word}{self.suffix}"

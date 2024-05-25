@@ -15,7 +15,7 @@ class FileParser:
         words = words.split()
 
         if len(words) == 0:
-            raise ValueError("No words found")
+            raise ValueError("Text file is empty")
 
         word_count = {}
         for word in words:
@@ -43,5 +43,15 @@ class FileParser:
 
         return most_common_word
     
-    def sandwich_word(self, word):
-        return f"{self.prefix}{word}{self.suffix}"
+    def sandwich_word(self, text, words):
+        if len(text) == 0:
+            raise ValueError("No text to replace words in")
+        
+        if len(words) == 0:
+            raise ValueError("Words list is empty")
+
+        parsed_text = text
+        for word in words:
+            parsed_text = parsed_text.replace(word, f"{self.prefix}{word}{self.suffix}")
+
+        return parsed_text

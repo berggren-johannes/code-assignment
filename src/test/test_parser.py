@@ -3,9 +3,9 @@ import pytest
 
 class TestFileParser:
     def test_get_most_common_word_normal_case(self):
-        text = "one one two three"
+        text = "one two two three"
         parser = FileParser.FileParser(text)
-        assert parser.get_most_common_word() == "one"
+        assert parser.get_most_common_word() == "two"
 
     def test_get_most_common_word_empty_text(self):
         text = ""
@@ -15,5 +15,10 @@ class TestFileParser:
 
     def test_get_most_common_word_single_word(self):
         text = "one"
+        parser = FileParser.FileParser(text)
+        assert parser.get_most_common_word() == "one"
+
+    def test_get_most_common_word_multiple_words(self):
+        text = "one two three"
         parser = FileParser.FileParser(text)
         assert parser.get_most_common_word() == "one"

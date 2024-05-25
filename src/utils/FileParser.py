@@ -29,8 +29,8 @@ class FileParser:
         print(word_count)
 
         if len(word_count) > 1:
-            multiple_words = [(word_count.keys())[0]]
-            word_keys = (word_count.keys())
+            multiple_words = [list(word_count.keys())[0]]
+            word_keys = list(word_count.keys())
 
             for i in range(1, len(word_keys)):
                 if word_count[word_keys[i]] == word_count[word_keys[i - 1]]:

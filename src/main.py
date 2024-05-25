@@ -1,5 +1,5 @@
 from flask import Flask, request
-from FileParser import FileParser
+from src.utils.FileParser import FileParser
 
 app = Flask(__name__)
 

@@ -3,10 +3,6 @@ from utils.FileParser import FileParser
 
 app = Flask(__name__)
 
-@app.route('/hello')
-def hello():
-    return 'Hello world!'
-
 @app.route('/file', methods=['POST'])
 def file():
     file = request.files.get("file")

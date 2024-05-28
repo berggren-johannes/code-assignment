@@ -1,5 +1,6 @@
 import src.utils.FileParser as FileParser
 import pytest
+from unittest.mock import patch
 
 class TestFileParser:
     def test_get_most_common_word_normal_case(self):
@@ -28,19 +29,30 @@ class TestFileParser:
         parser = FileParser.FileParser(text)
         assert parser.get_most_common_word() == ["one", "two"]
 
-    def test_sandwich_word_normal_case(self):
+    def test_replace_words_normal_case(self):
         text = "one two two three"
         parser = FileParser.FileParser(text)
-        assert parser.sandwich_word(text, ["two"]) == "one footwobar footwobar three"
+        assert parser.replace_words() == "one footwobar footwobar three"
 
-    def test_sandwich_word_empty_text(self):
+    def test_replace_words_empty_text(self):
         text = ""
         parser = FileParser.FileParser(text)
         with pytest.raises(ValueError):
-            parser.sandwich_word("", ["two"])
+            parser.replace_words()
 
-    def test_sandwich_word_empty_words(self):
+    @patch.object(FileParser.FileParser, 'get_most_common_word', return_value=[])
+    def test_replace_words_empty_words(self, mock_get_most_common_word):
         text = "one two two three"
         parser = FileParser.FileParser(text)
         with pytest.raises(ValueError):
-            parser.sandwich_word(text, [])
+            parser.replace_words()
+            
+    def test_replace_words_contains_word(self):
+        text = "one two two three onetwothree"
+        parser = FileParser.FileParser(text)
+        assert parser.replace_words() == "one footwobar footwobar three onetwothree"
+
+    def test_get_parsed_normal_case(self):
+        text = "one two two three"
+        parser = FileParser.FileParser(text)
+        assert parser.get_parsed() == "one footwobar footwobar three"

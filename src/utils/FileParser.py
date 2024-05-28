@@ -1,32 +1,31 @@
+import re
+
 class FileParser:
     def __init__(self, text):
         self.text = text
         self.prefix = "foo"
         self.suffix = "bar"
-
-    def get_raw(self):
-        return self.text
     
     def get_parsed(self):
-        return self.text.split()
+        replaced_text = self.replace_words()
+        return replaced_text
     
     def get_most_common_word(self):
-        words = self.get_raw()
+        words = self.text
         words = words.split()
 
         if len(words) == 0:
             raise ValueError("Text file is empty")
 
+        special_char_pattern = r"[^a-zA-Z0-9]"
         word_count = {}
         for word in words:
             if word in word_count:
                 word_count[word] += 1
-            else:
+            elif re.search(special_char_pattern, word) is None:
                 word_count[word] = 1
 
         word_count = dict(sorted(word_count.items(), key=lambda item: item[1], reverse=True))
-
-        print(word_count)
 
         if len(word_count) > 1:
             multiple_words = [list(word_count.keys())[0]]
@@ -43,15 +42,16 @@ class FileParser:
 
         return most_common_word
     
-    def sandwich_word(self, text, words):
-        if len(text) == 0:
+    def replace_words(self):
+        if len(self.text) == 0:
             raise ValueError("No text to replace words in")
         
+        words = self.get_most_common_word()
         if len(words) == 0:
             raise ValueError("Words list is empty")
-
-        parsed_text = text
+            
+        parsed_text = self.text
         for word in words:
-            parsed_text = parsed_text.replace(word, f"{self.prefix}{word}{self.suffix}")
+            parsed_text = re.sub(rf"\b{word}\b", self.prefix + word + self.suffix, parsed_text, flags=re.IGNORECASE)
 
         return parsed_text
